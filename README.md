@@ -161,3 +161,6 @@ This integration is provided as-is for personal use with WTH UMR2 heating regula
 - English and Dutch language support
 - Device information with hardware and firmware versions
 - Direct configuration URL to device web interface
+
+> [!NOTE]
+**Note that this integration works and does what it should do. I'm not planning on expanding or maintaining this integration unless is breaks or throws warnings/errors in the Home Assistant logs.**
