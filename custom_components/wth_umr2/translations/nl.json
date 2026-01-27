@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Verbind met WTH UMR2 Regulator",
+        "description": "Voer het IP-adres van uw WTH UMR2 regulator in.",
+        "data": {
+          "host": "IP-adres"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan geen verbinding maken met het apparaat. Controleer het IP-adres en zorg ervoor dat het apparaat bereikbaar is.",
+      "invalid_response": "Het apparaat gaf een ongeldige reactie. Controleer of dit een WTH UMR2 regulator is.",
+      "unknown": "Er is een onverwachte fout opgetreden. Probeer het opnieuw."
+    },
+    "abort": {
+      "already_configured": "Dit apparaat is al geconfigureerd."
+    }
+  }
+}
