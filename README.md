@@ -6,7 +6,7 @@
 **Author:** AbeltjeNL  
 **License:** MIT
 
-This custom component integrates the WTH UMR2 heating regulator with Home Assistant, allowing you to monitor and control your heating system.
+This custom component integrates the WTH UMR2 heating regulator with Home Assistant, allowing you to monitor your heating system.
 
 > [!NOTE]
 > This integration has no affiliation whatsoever with the brand or company WTH. All logo's used are publicly available on Google images.
