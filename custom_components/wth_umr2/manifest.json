@@ -1,0 +1,12 @@
+{
+  "domain": "wth_umr2",
+  "name": "WTH UMR2 Regulator",
+  "codeowners": ["@AbeltjeNL"],
+  "config_flow": true,
+  "documentation": "https://github.com/AbeltjeNL/wth_umr2",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "requirements": [],
+  "version": "1.0",
+  "icon": "mdi:radiator"
+}
