@@ -8,6 +8,8 @@
 
 Deze custom component integreert de WTH UMR2 verwarmingsregulator met Home Assistant, waarmee u uw verwarmingssysteem kunt monitoren en beheren.
 
+**Houd er rekening mee dat deze integratie is geschreven door Claude.ai !**
+
 ## Functies
 
 - **GUI Configuratie**: Eenvoudige installatie via de Home Assistant UI
