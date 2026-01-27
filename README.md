@@ -8,6 +8,8 @@
 
 This custom component integrates the WTH UMR2 heating regulator with Home Assistant, allowing you to monitor and control your heating system.
 
+**Do note that this integration is writen using Claude.ai !**
+
 ## 🎨 Logo Display
 
 The WTH logo is included in this integration but requires additional setup to display in Home Assistant. See [ENABLE_LOGO.md](ENABLE_LOGO.md) for detailed instructions on how to make the logo appear in your dashboard and integration list.
