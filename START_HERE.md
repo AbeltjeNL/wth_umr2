@@ -8,7 +8,7 @@ This package contains **everything** for a complete WTH UMR2 integration with Ho
 
 ## 📦 Package Contents
 
-**File:** `wth_umr2_v1.3.0_HA2026_complete.zip` (175KB)
+**File:** `wth_umr2_v1.3.0.zip` (175KB)
 
 - ✅ **Integration Code** - HA 2026.3+ brand system ready
 - ✅ **Brand Folder** - Official logos and icons
@@ -43,7 +43,7 @@ custom_components/wth_umr2/
 
 ### Step 1: Extract Package
 ```bash
-unzip wth_umr2_v1.3.0_HA2026_complete.zip
+unzip wth_umr2_v1.3.0.zip
 ```
 
 ### Step 2: Copy to Home Assistant
@@ -291,7 +291,7 @@ See **RELEASE_v1.3.0.md** for detailed changes.
 
 **Solution:**
 1. Verify IP address is correct
-2. Test device: `curl http://192.168.178.69/get.json?f=$.status.*`
+2. Test device: `curl http://YOUR.WTH.IP.ADDRESS/get.json?f=$.status.*`
 3. Check device is powered on
 4. Ensure same network as Home Assistant
 
