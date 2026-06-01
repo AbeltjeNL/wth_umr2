@@ -3,9 +3,11 @@
 ![WTH Logo](custom_components/wth_umr2/logo.png)
 
 > [!NOTE]
-**Version:** 1.0  
+**Version:** 1.3.0
 **Author:** AbeltjeNL  
 **License:** MIT
+**Quality:** Platinum ⭐  
+**Languages:** English 🇬🇧 | Dutch 🇳🇱
 
 This custom component integrates the WTH UMR2 heating regulator with Home Assistant, allowing you to monitor your heating system.
 
