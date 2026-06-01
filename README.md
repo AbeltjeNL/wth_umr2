@@ -11,7 +11,7 @@ This custom component integrates the WTH UMR2 heating regulator with Home Assist
 This integration has no affiliation with the company WTH nor do I. 
 All uses images and logos are freely available on Google. 
 This integration was made using Claude AI. No manual labor on my end. Keep this in mind ;)
-The integration works properly and i'm not planning to do maintanace releases. 
+The integration works properly and i'm not planning to do maintenance releases. 
 If you like it, use it! :)
 
 ## ✨ What's New in v1.3.0
