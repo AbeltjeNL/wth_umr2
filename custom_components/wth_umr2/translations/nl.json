@@ -6,11 +6,15 @@
         "description": "Voer het IP-adres van uw WTH UMR2 regulator in.",
         "data": {
           "host": "IP-adres"
+        },
+        "data_description": {
+          "host": "Het IP-adres of hostnaam van uw WTH UMR2 apparaat op uw lokale netwerk"
         }
       }
     },
     "error": {
-      "cannot_connect": "Kan geen verbinding maken met het apparaat. Controleer het IP-adres en zorg ervoor dat het apparaat bereikbaar is.",
+      "cannot_connect": "Kan geen verbinding maken met het apparaat. Controleer het IP-adres en zorg ervoor dat het apparaat bereikbaar is op uw netwerk.",
+      "timeout": "Verbinding met het apparaat is verlopen. Controleer het IP-adres en zorg ervoor dat het apparaat is ingeschakeld en verbonden met uw netwerk.",
       "invalid_response": "Het apparaat gaf een ongeldige reactie. Controleer of dit een WTH UMR2 regulator is.",
       "unknown": "Er is een onverwachte fout opgetreden. Probeer het opnieuw."
     },
