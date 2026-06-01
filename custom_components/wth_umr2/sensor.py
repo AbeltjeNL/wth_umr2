@@ -7,12 +7,14 @@ from typing import Any
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
+    SensorEntityDescription,
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
     UnitOfTemperature,
+    EntityCategory,
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
@@ -31,82 +33,90 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up WTH UMR2 sensor based on a config entry."""
-    coordinator: WTHCoordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator: WTHCoordinator = entry.runtime_data
     
-    entities = []
+    entities: list[SensorEntity] = []
     
     # Main status sensors
-    entities.append(WTHMainStateSensor(coordinator, entry))
-    entities.append(WTHModeSensor(coordinator, entry))
-    entities.append(WTHDisplaySensor(coordinator, entry))
-    entities.append(WTHLEDSensor(coordinator, entry))
-    entities.append(WTHHeatFactorSensor(coordinator, entry))
-    entities.append(WTHCoolFactorSensor(coordinator, entry))
-    entities.append(WTHPWMFactorSensor(coordinator, entry))
+    entities.extend([
+        WTHMainStateSensor(coordinator, entry),
+        WTHModeSensor(coordinator, entry),
+        WTHDisplaySensor(coordinator, entry),
+        WTHLEDSensor(coordinator, entry),
+        WTHHeatFactorSensor(coordinator, entry),
+        WTHCoolFactorSensor(coordinator, entry),
+        WTHPWMFactorSensor(coordinator, entry),
+    ])
     
-    # Heater output sensor
-    entities.append(WTHHeaterSensor(coordinator, entry))
-    
-    # Cooler output sensor
-    entities.append(WTHCoolerSensor(coordinator, entry))
-    
-    # Pump speed sensor
-    entities.append(WTHPumpSpeedSensor(coordinator, entry))
+    # Output sensors
+    entities.extend([
+        WTHHeaterSensor(coordinator, entry),
+        WTHCoolerSensor(coordinator, entry),
+        WTHPumpSpeedSensor(coordinator, entry),
+    ])
     
     # Thermostat sensors (8 thermostats)
     for i in range(8):
-        entities.append(WTHThermostatSensor(coordinator, entry, i))
-        entities.append(WTHThermostatTemperatureSensor(coordinator, entry, i))
+        entities.extend([
+            WTHThermostatSensor(coordinator, entry, i),
+            WTHThermostatTemperatureSensor(coordinator, entry, i),
+        ])
     
     # Valve sensors (10 valves)
     for i in range(10):
         entities.append(WTHValveSensor(coordinator, entry, i))
     
     # Input sensors
-    entities.append(WTHMaxInputSensor(coordinator, entry))
-    entities.append(WTHReturnInputSensor(coordinator, entry))
-    entities.append(WTHCondensInputSensor(coordinator, entry))
+    entities.extend([
+        WTHMaxInputSensor(coordinator, entry),
+        WTHReturnInputSensor(coordinator, entry),
+        WTHCondensInputSensor(coordinator, entry),
+    ])
     
     # Temperature sensors (10 sensors)
     for i in range(10):
         entities.append(WTHTemperatureSensor(coordinator, entry, i))
     
-    # Communication status sensors
-    entities.append(WTHFanlinkStatusSensor(coordinator, entry))
-    entities.append(WTHRFStatusSensor(coordinator, entry))
-    entities.append(WTHModbusStatusSensor(coordinator, entry))
-    entities.append(WTHBluetoothStatusSensor(coordinator, entry))
-    entities.append(WTHEthernetStatusSensor(coordinator, entry))
+    # Communication status sensors (diagnostic)
+    entities.extend([
+        WTHFanlinkStatusSensor(coordinator, entry),
+        WTHRFStatusSensor(coordinator, entry),
+        WTHModbusStatusSensor(coordinator, entry),
+        WTHBluetoothStatusSensor(coordinator, entry),
+        WTHEthernetStatusSensor(coordinator, entry),
+    ])
     
-    # Fanlink devices
+    # Fanlink devices (diagnostic)
     for i in range(10):
         entities.append(WTHFanlinkDeviceSensor(coordinator, entry, i))
     
     async_add_entities(entities)
 
 
-class WTHBaseSensor(CoordinatorEntity, SensorEntity):
+class WTHBaseSensor(CoordinatorEntity[WTHCoordinator], SensorEntity):
     """Base class for WTH UMR2 sensors."""
+
+    _attr_has_entity_name = True
 
     def __init__(self, coordinator: WTHCoordinator, entry: ConfigEntry) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
         self._entry = entry
-        self._attr_has_entity_name = True
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        """Return device information."""
-        device_id = self.coordinator.data.get("id", self._entry.entry_id)
-        return DeviceInfo(
-            identifiers={(DOMAIN, self._entry.entry_id)},
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, entry.entry_id)},
             name="WTH UMR2 Regulator",
             manufacturer="WTH",
             model="UMR2",
-            sw_version=self.coordinator.data.get("version", {}).get("fw", "Unknown"),
-            hw_version=self.coordinator.data.get("version", {}).get("hw", "Unknown"),
-            configuration_url=f"http://{self.coordinator.host}",
+            sw_version=coordinator.data.get("version", {}).get("fw", "Unknown"),
+            hw_version=coordinator.data.get("version", {}).get("hw", "Unknown"),
+            configuration_url=f"http://{coordinator.host}",
         )
+
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return self.coordinator.last_update_success and self.coordinator.data is not None
+
 
 
 class WTHMainStateSensor(WTHBaseSensor):
@@ -551,6 +561,7 @@ class WTHFanlinkStatusSensor(WTHBaseSensor):
 
     _attr_name = "Fanlink Status"
     _attr_icon = "mdi:lan-connect"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def unique_id(self) -> str:
@@ -576,6 +587,7 @@ class WTHRFStatusSensor(WTHBaseSensor):
 
     _attr_name = "RF Status"
     _attr_icon = "mdi:wifi"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def unique_id(self) -> str:
@@ -601,6 +613,7 @@ class WTHModbusStatusSensor(WTHBaseSensor):
 
     _attr_name = "Modbus Status"
     _attr_icon = "mdi:serial-port"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def unique_id(self) -> str:
@@ -626,6 +639,7 @@ class WTHBluetoothStatusSensor(WTHBaseSensor):
 
     _attr_name = "Bluetooth Status"
     _attr_icon = "mdi:bluetooth"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def unique_id(self) -> str:
@@ -651,6 +665,7 @@ class WTHEthernetStatusSensor(WTHBaseSensor):
 
     _attr_name = "Ethernet Status"
     _attr_icon = "mdi:ethernet"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def unique_id(self) -> str:
@@ -681,6 +696,7 @@ class WTHFanlinkDeviceSensor(WTHBaseSensor):
     """Sensor for Fanlink device."""
 
     _attr_icon = "mdi:devices"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     def __init__(self, coordinator: WTHCoordinator, entry: ConfigEntry, index: int) -> None:
         """Initialize the sensor."""

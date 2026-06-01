@@ -6,11 +6,15 @@
         "description": "Enter the IP address of your WTH UMR2 regulator.",
         "data": {
           "host": "IP Address"
+        },
+        "data_description": {
+          "host": "The IP address or hostname of your WTH UMR2 device on your local network"
         }
       }
     },
     "error": {
-      "cannot_connect": "Failed to connect to the device. Please check the IP address and ensure the device is reachable.",
+      "cannot_connect": "Failed to connect to the device. Please check the IP address and ensure the device is reachable on your network.",
+      "timeout": "Connection to the device timed out. Please check the IP address and ensure the device is powered on and connected to your network.",
       "invalid_response": "The device returned an invalid response. Please ensure this is a WTH UMR2 regulator.",
       "unknown": "An unexpected error occurred. Please try again."
     },
