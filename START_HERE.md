@@ -61,7 +61,7 @@ cp -r wth_umr2/custom_components/wth_umr2 /config/custom_components/
    ```
    Settings → Devices & Services → Add Integration
    Search: "WTH UMR2"
-   IP Address: 192.168.178.69
+   IP Address: YOUR.WTH.IP.ADDRESS
    Submit
    ```
 
