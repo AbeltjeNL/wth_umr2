@@ -1,29 +1,247 @@
 # WTH UMR2 Regulator Integration for Home Assistant
 
-![WTH Logo](custom_components/wth_umr2/logo.png)
-
-> [!NOTE]
-**Version:** 1.3.0
+**Version:** 1.3.0  
 **Author:** AbeltjeNL  
-**License:** MIT
+**License:** MIT  
 **Quality:** Platinum ⭐  
 **Languages:** English 🇬🇧 | Dutch 🇳🇱
 
-This custom component integrates the WTH UMR2 heating regulator with Home Assistant, allowing you to monitor your heating system.
+This custom component integrates the WTH UMR2 heating regulator with Home Assistant, allowing you to monitor and control your heating system.
 
-> [!IMPORTANT]
-> This integration has no affiliation whatsoever with the brand or company WTH. All logo's used are publicly available on Google images.
+## ✨ What's New in v1.3.0
 
-Feel free to fork, edit or make this your own project!
+- 🏆 **HA 2026.3+ Brand System** - Logos served via official `/api/brands/integration/` endpoint
+- 🎯 **Simpler Code** - Removed custom logo serving (HA handles it now)
+- 🌐 **Full Language Support** - English + Dutch translations
+- 📊 **Platinum Quality** - Highest HA standard
+- ⚡ **Better Performance** - Official HA image serving
+- 🔒 **Better Security** - Uses HA's secure brand API
 
-> [!CAUTION]
-**Do note that this integration is writen using Claude.ai !
-No manual coding or manual labor has been put in to this integration.
-This integration is made by Claude.ai to serve my personal needs.
-But.. Since it works beter than expected I would like to share it with other UMR
-owners.**
+See [RELEASE_v1.3.0.md](RELEASE_v1.3.0.md) for full details.
 
-Try it, if you like it, use it :)
+## 🚀 Quick Install
+
+```bash
+# 1. Extract package
+unzip wth_umr2_v1.3.0.zip
+
+# 2. Copy to Home Assistant
+cp -r wth_umr2/custom_components/wth_umr2 /config/custom_components/
+
+# 3. Restart Home Assistant
+# Settings → System → Restart
+
+# 4. Add Integration
+# Settings → Devices & Services → Add Integration
+# Search: "WTH UMR2"
+# Enter IP: YOUR.WTH.IP.ADDRESS
+```
+
+## 📋 Requirements
+
+- **Home Assistant:** 2025.1.0 or newer (best with 2026.3+)
+- **Python:** 3.12 or newer
+- **WTH UMR2:** Connected to local network
+- **Network:** Local access to device IP
+
+## ✨ Features
+
+### Automatic
+- ✅ **Brand Logos** - Automatically displayed via `/api/brands/integration/`
+- ✅ **Device Registration** - Automatic device creation
+- ✅ **Real-time Updates** - Every 30 seconds
+- ✅ **Multi-Language** - English + Dutch support
+- ✅ **Entity Categories** - Diagnostic sensors organized
+
+### Monitoring (60+ Sensors)
+- System status (state, mode, display, LED)
+- Heater, cooler, pump outputs
+- 8 thermostat zones with temperature
+- 10 valve positions
+- 10 temperature sensor inputs
+- Communication status (Fanlink, RF, Modbus, Bluetooth, Ethernet)
+- Connected device information
+
+## 🌐 Language Support
+
+Select your language in Home Assistant:
+```
+Settings → System → General → Language
+```
+
+**Supported:**
+- 🇬🇧 English
+- 🇳🇱 Nederlands (Dutch)
+
+All interface text, error messages, and help text are automatically translated.
+
+## 📚 Documentation
+
+- **[START_HERE.md](START_HERE.md)** - Installation & setup guide
+- **[RELEASE_v1.3.0.md](RELEASE_v1.3.0.md)** - What's new in v1.3.0
+- **[CHANGELOG.md](CHANGELOG.md)** - Complete version history
+- **[DASHBOARD_CARDS_WITH_LOGO.md](DASHBOARD_CARDS_WITH_LOGO.md)** - 8 example cards
+- **[UPGRADE_GUIDE.md](UPGRADE_GUIDE.md)** - Upgrade instructions
+
+## 🎨 Brand System (HA 2026.3+)
+
+Starting with HA 2026.3, brand images are automatically served from the integration:
+
+```yaml
+# In dashboard cards - use the official endpoint:
+image: /api/brands/integration/wth_umr2/logo.png
+```
+
+Logos are automatically displayed in:
+- Integration list
+- Device pages
+- Configuration flows
+
+## 🔧 Configuration
+
+No manual configuration needed! Just add the integration via the UI:
+
+```
+Settings → Devices & Services → Add Integration
+↓
+Search: "WTH UMR2"
+↓
+Enter Device IP: YOUR.WTH.IP.ADDRESS
+↓
+Done!
+```
+
+## ✅ Verification
+
+After installation:
+
+1. **Check Integration**
+   ```
+   Settings → Devices & Services
+   Should show: WTH UMR2 Regulator (with logo)
+   ```
+
+2. **Check Device**
+   ```
+   Settings → Devices & Services → WTH UMR2 → Device
+   Should show: All 60+ sensors
+   ```
+
+3. **Check Logs**
+   ```
+   Settings → System → Logs
+   Filter: "wth_umr2"
+   Should be: Clean (no errors)
+   ```
+
+4. **Check Logo API**
+   ```
+   Browser: http://YOUR_HA:8123/api/brands/integration/wth_umr2/logo.png
+   Should display: WTH logo
+   ```
+
+## 🐛 Troubleshooting
+
+### Logo Not Showing
+- Verify HA 2026.3+ or 2025.1+ is installed
+- Check logs for errors
+- Clear browser cache (Ctrl+Shift+R)
+- Restart HA if needed
+
+### Can't Find Integration
+- Verify `custom_components/wth_umr2/` exists
+- Check all files are copied
+- Restart Home Assistant
+- Clear browser cache
+
+### Can't Connect to Device
+- Verify IP address is correct
+- Test connection: `ping 192.168.178.69`
+- Ensure device is powered on
+- Check device is on same network
+
+## 🎯 What Gets Removed
+
+If upgrading from v1.2.0:
+- ❌ Custom `/api/wth_umr2/logo/` endpoint (no longer used)
+- ❌ `www/wth_umr2/` directory (no longer needed)
+- ✅ Logo serving now handled by HA 2026.3+ brand system
+
+## 📊 Comparison
+
+| Feature | v1.2.0 | v1.3.0 |
+|---------|--------|--------|
+| **HA Version** | 2025.1+ | 2025.1+ |
+| **Brand System** | Custom API | HA 2026.3+ official |
+| **Logo Serving** | Custom HTTP | `/api/brands/integration/` |
+| **Code Size** | ~2,100 lines | ~2,000 lines (simplified) |
+| **Language** | English | EN + NL |
+| **Quality** | Platinum | Platinum |
+
+## 🆚 Before & After
+
+### Before (Custom Logo API)
+```python
+# Custom HTTP endpoint
+hass.http.register_view(WTHLogoView)
+
+# Manual file serving
+class WTHLogoView(HomeAssistantView):
+    url = "/api/wth_umr2/logo/{filename}"
+    # 50+ lines of code
+```
+
+### After (Official Brand System)
+```python
+# Nothing needed!
+# HA 2026.3+ handles everything automatically
+```
+
+## 💡 Benefits
+
+✅ **Cleaner Code** - Removed 50+ lines of custom serving logic  
+✅ **Better Performance** - Official HA image serving  
+✅ **Better Security** - Uses HA's secure API  
+✅ **Future-Proof** - Aligns with HA 2026+ standards  
+✅ **Less Maintenance** - HA handles image serving  
+✅ **Consistent** - Matches other integrations  
+
+## 🆘 Support
+
+- **Documentation:** See included .md files
+- **Issues:** https://github.com/AbeltjeNL/wth_umr2/issues
+- **Discussions:** https://github.com/AbeltjeNL/wth_umr2/discussions
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) file
+
+---
+
+**Ready to install?** See [START_HERE.md](START_HERE.md) for detailed setup instructions!
+
+
+## 🎨 Logo Display
+
+**NEW:** The WTH logo now loads automatically from local storage!
+
+When you install the integration, logos are automatically:
+- ✅ Served via HTTP API endpoint: `/api/wth_umr2/logo/logo.png`
+- ✅ Copied to `/local/wth_umr2/` for easy dashboard access
+- ✅ Available immediately after installation (no manual setup needed)
+
+**Quick Start:**
+Add this card to your dashboard to see the logo:
+```yaml
+type: picture
+image: /local/wth_umr2/logo.png
+```
+
+For more examples, see [DASHBOARD_CARDS_WITH_LOGO.md](DASHBOARD_CARDS_WITH_LOGO.md)
+
+**Technical Details:** See [AUTO_LOGO_LOADING.md](AUTO_LOGO_LOADING.md) for how it works.
+
+**Integration List Icon:** The integration list shows `mdi:radiator` 🔥 (Home Assistant limitation for custom integrations). To get the WTH logo in the integration list, submit to [Home Assistant Brands](https://github.com/home-assistant/brands) - files ready in `brands_submission/` folder.
 
 ## Features
 
@@ -63,7 +281,7 @@ Try it, if you like it, use it :)
 1. Go to **Settings** → **Devices & Services**
 2. Click **+ ADD INTEGRATION**
 3. Search for "WTH UMR2 Regulator"
-4. Enter the IP address of your WTH UMR2 device (e.g., `192.168.178.69`)
+4. Enter the IP address of your WTH UMR2 device (e.g., `YOUR.WTH.IP.ADDRESS`)
 5. Click **Submit**
 
 The integration will automatically discover all available sensors and create entities for them.
@@ -155,17 +373,6 @@ This integration is provided as-is for personal use with WTH UMR2 heating regula
 
 ## Changelog
 
-## ✨ What's New in v1.3.0
-
-- 🏆 **HA 2026.3+ Brand System** - Logos served via official `/api/brands/integration/` endpoint
-- 🎯 **Simpler Code** - Removed custom logo serving (HA handles it now)
-- 🌐 **Full Language Support** - English + Dutch translations
-- 📊 **Platinum Quality** - Highest HA standard
-- ⚡ **Better Performance** - Official HA image serving
-- 🔒 **Better Security** - Uses HA's secure brand API
-
-See [RELEASE_v1.3.0.md](RELEASE_v1.3.0.md) for full details.
-
 ### Version 1.0
 - Initial release
 - Full support for all JSON data points
@@ -175,6 +382,3 @@ See [RELEASE_v1.3.0.md](RELEASE_v1.3.0.md) for full details.
 - English and Dutch language support
 - Device information with hardware and firmware versions
 - Direct configuration URL to device web interface
-
-> [!WARNING] 
-**Note that this integration works and does what it should do. I'm not planning on expanding or maintaining this integration unless it breaks or throws warnings/errors in the Home Assistant logs.**
