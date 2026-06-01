@@ -25,16 +25,6 @@ owners.**
 
 Try it, if you like it, use it :)
 
-## 🎨 Logo Display
-
-The WTH logo is included in this integration but requires additional setup to display in Home Assistant. See [ENABLE_LOGO.md](ENABLE_LOGO.md) for detailed instructions on how to make the logo appear in your dashboard and integration list.
-
-**Quick summary:** Custom integrations don't show logos automatically in Home Assistant. You can either:
-1. Copy the logo to your `www` folder and use it in dashboard cards (easy, 5 minutes)
-2. Submit the integration to Home Assistant Brands repository (for everyone, but requires approval)
-
-For full details, see the [Logo Display Guide](LOGO_DISPLAY_GUIDE.md).
-
 ## Features
 
 - **GUI Configuration**: Easy setup through Home Assistant's UI
@@ -164,6 +154,17 @@ For issues, feature requests, or contributions, please visit the GitHub reposito
 This integration is provided as-is for personal use with WTH UMR2 heating regulators.
 
 ## Changelog
+
+## ✨ What's New in v1.3.0
+
+- 🏆 **HA 2026.3+ Brand System** - Logos served via official `/api/brands/integration/` endpoint
+- 🎯 **Simpler Code** - Removed custom logo serving (HA handles it now)
+- 🌐 **Full Language Support** - English + Dutch translations
+- 📊 **Platinum Quality** - Highest HA standard
+- ⚡ **Better Performance** - Official HA image serving
+- 🔒 **Better Security** - Uses HA's secure brand API
+
+See [RELEASE_v1.3.0.md](RELEASE_v1.3.0.md) for full details.
 
 ### Version 1.0
 - Initial release
