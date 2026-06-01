@@ -1,8 +1,0 @@
-{
-  "name": "WTH UMR2 Regulator",
-  "country": "NL",
-  "domains": ["sensor"],
-  "iot_class": "Local Polling",
-  "homeassistant": "2023.1.0",
-  "render_readme": true
-}
