@@ -8,11 +8,13 @@
 
 This custom component integrates the WTH UMR2 heating regulator with Home Assistant, allowing you to monitor and control your heating system.
 
-This integration has no affiliation with the company WTH nor do I. 
-All uses images and logos are freely available on Google. 
-This integration was made using Claude AI. No manual labor on my end. Keep this in mind ;)
-The integration works properly and i'm not planning to do maintenance releases. 
-If you like it, use it! :)
+> [!IMPORTANT]
+```This integration has no affiliation with the company WTH and nor do I.```
+```All used images and logos in this project are freely available on Google.```
+```This integration was made using Claude AI. No manual labor on my end. Keep this in mind ;)```
+```The integration works properly and i'm not planning to do maintenance releases. I may update or rework the code when necessary.```
+```If you like it, use it! :)```
+
 
 ## ✨ What's New in v1.3.0
 
@@ -24,24 +26,6 @@ If you like it, use it! :)
 - 🔒 **Better Security** - Uses HA's secure brand API
 
 See [RELEASE_v1.3.0.md](RELEASE_v1.3.0.md) for full details.
-
-## 🚀 Quick Install
-
-```bash
-# 1. Extract package
-unzip wth_umr2_v1.3.0.zip
-
-# 2. Copy to Home Assistant
-cp -r wth_umr2/custom_components/wth_umr2 /config/custom_components/
-
-# 3. Restart Home Assistant
-# Settings → System → Restart
-
-# 4. Add Integration
-# Settings → Devices & Services → Add Integration
-# Search: "WTH UMR2"
-# Enter IP: YOUR.WTH.IP.ADDRESS
-```
 
 ## 📋 Requirements
 
@@ -355,8 +339,9 @@ Many sensors include additional attributes with detailed information:
 
 ## Advanced Configuration
 
+
 ### Polling Interval
-The default polling interval is 30 seconds. To change this, modify the `SCAN_INTERVAL` in `__init__.py`:
+The default polling interval is 30 seconds. To change this, modify the `SCAN_INTERVAL` in `__init__.py
 
 ```python
 SCAN_INTERVAL = timedelta(seconds=30)  # Change to your preferred interval
