@@ -21,16 +21,13 @@ _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_HOST, default="WTH.UMR.IP.ADDRESS"): cv.string,
+        vol.Required(CONF_HOST, default="YOUR.WTH.IP.ADDRESS"): cv.string,
     }
 )
 
 
 async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
-    """Validate the user input allows us to connect.
-    
-    Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
-    """
+    """Validate the user input allows us to connect."""
     host = data[CONF_HOST]
     url = f"http://{host}/get.json?f=$.status.*"
     
@@ -42,19 +39,13 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
                 if response.status != 200:
                     raise ConnectionError(f"HTTP {response.status}")
                 
-                json_data = await response.json()
+                data = await response.json()
                 
-                if "status" not in json_data:
+                if "status" not in data:
                     raise ValueError("Invalid response format")
                 
-                # Extract device ID if available
-                device_id = json_data.get("id", "unknown")
-                device_type = json_data.get("type", "WTH_Regulator")
-                
                 return {
-                    "title": f"WTH UMR2 ({device_id[-8:]})" if len(device_id) > 8 else f"WTH UMR2 ({device_id})",
-                    "device_id": device_id,
-                    "device_type": device_type,
+                    "title": f"WTH UMR2 ({host})",
                 }
                 
     except TimeoutError as err:
@@ -63,6 +54,9 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     except ClientError as err:
         _LOGGER.error("Error connecting to WTH UMR2 at %s: %s", host, err)
         raise ConnectionError(str(err)) from err
+    except ValueError as err:
+        _LOGGER.error("Invalid response from WTH UMR2 at %s: %s", host, err)
+        raise ValueError("Invalid response") from err
     except Exception as err:
         _LOGGER.exception("Unexpected error connecting to WTH UMR2 at %s", host)
         raise
@@ -72,14 +66,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for WTH UMR2 Regulator."""
 
     VERSION = 1
-
-    @staticmethod
-    @callback
-    def async_get_options_flow(
-        config_entry: config_entries.ConfigEntry,
-    ) -> config_entries.OptionsFlow:
-        """Get the options flow for this handler."""
-        return OptionsFlowHandler(config_entry)
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -97,8 +83,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     errors["base"] = "cannot_connect"
             except ValueError:
                 errors["base"] = "invalid_response"
-            except Exception:  # pylint: disable=broad-except
-                _LOGGER.exception("Unexpected exception")
+            except Exception as err:
+                _LOGGER.exception("Unexpected exception in config flow")
                 errors["base"] = "unknown"
             else:
                 await self.async_set_unique_id(user_input[CONF_HOST])
@@ -109,32 +95,10 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data=user_input,
                 )
 
-        # Logo is now handled automatically by HA 2026.3+ via /api/brands/integration/
-
         return self.async_show_form(
             step_id="user",
             data_schema=STEP_USER_DATA_SCHEMA,
             errors=errors,
-        )
-
-
-class OptionsFlowHandler(config_entries.OptionsFlow):
-    """Handle options flow for WTH UMR2."""
-
-    def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
-        """Initialize options flow."""
-        self.config_entry = config_entry
-
-    async def async_step_init(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
-        """Manage the options."""
-        if user_input is not None:
-            return self.async_create_entry(title="", data=user_input)
-
-        return self.async_show_form(
-            step_id="init",
-            data_schema=vol.Schema({}),
         )
 
 

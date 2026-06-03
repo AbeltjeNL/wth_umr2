@@ -4,8 +4,6 @@ from __future__ import annotations
 import asyncio
 import logging
 from datetime import timedelta
-from pathlib import Path
-import shutil
 from typing import Any
 
 from aiohttp import ClientError
